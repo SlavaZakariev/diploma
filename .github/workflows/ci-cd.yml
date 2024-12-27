@@ -7,8 +7,8 @@ on:
   push:
     branches: 
       - main
-#    tags: 
-#      - 'v*'
+    tags: 
+      - '1.0.0'
 
 env:
   IMAGE_TAG: slavazakariev/nginx-app
