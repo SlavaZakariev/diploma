@@ -20,52 +20,60 @@ jobs:
   build-and-push:
     name: Build Docker image
     runs-on: ubuntu-22.04
+    if: startsWith(github.ref, 'refs/heads/main') || startsWith(github.ref, 'refs/tags/v')
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
-      
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      
-      - name: Extract version from commit messages
+
+      - name: List files in the working directory
         run: |
-          VERSION=$(git log -1 --pretty=format:%s | grep -oP 'v\d+\.\d+\.\d+')
-          if [[ ! -z "$VERSION" ]]; then
-            echo "VERSION=$VERSION" >> $GITHUB_ENV
+          ls -la
+
+      - name: Set up Kubernetes
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.21.0'
+
+      - name: Extract version from tag or commit message
+        run: |
+          echo "GITHUB_REF: ${GITHUB_REF}"
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/}
           else
-            echo "No version found in the commit message"
+            VERSION=$(git log -1 --pretty=format:%B | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+' || echo "")
+          fi
+          if [[ -z "$VERSION" ]]; then
+            echo "No version found in the commit message or tag"
             exit 1
           fi
-  
-      - name: Build and push
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: ${{ env.IMAGE_TAG }}:${{ env.VERSION }}
+          VERSION=${VERSION//[[:space:]]/}  # Remove any spaces
+          echo "Using version: $VERSION"
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
 
-  deploy:
-    needs: build-and-push
-    name: Deploy to Kubernetes
-    if: startsWith(github.ref, 'refs/heads/main') || startsWith(github.ref, 'refs/tags/v')
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Configure Kubernetes CLI
-        uses: azure/k8s-set-context@v4
-        with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.KUBECONFIG }}
-
-      - name: Deploy to Kubernetes with Helm
+      - name: Replace image tag in deployment.yaml
         run: |
-          helm upgrade --install ${{ env.RELEASE_NAME }} ./nginx_ci --namespace ${{ env.NAMESPACE }} --set image.tag=${{ env.VERSION }}
+          if [ ! -f ./deploy/deployment.yaml ]; then
+            echo "deployment.yaml not found in the current directory"
+            exit 1
+          fi
+          sed -i "s|image: nikulinms/nginx-static-app:.*|image: ${{ env.IMAGE_TAG }}:${{ env.VERSION }}|" ./deploy/deployment.yaml
+
+      - name: Create kubeconfig
+        run: |
+          mkdir -p $HOME/.kube/
+
+      - name: Authenticate to Kubernetes cluster
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        run: |
+          echo "${KUBE_CONFIG_DATA}" | base64 --decode > ${HOME}/.kube/config
+          kubectl config view
+          kubectl get nodes
+
+      - name: Apply Kubernetes manifests
+        run: |
+          kubectl apply -f ./deploy/deployment.yaml
+          kubectl get daemonsets -n monitoring
+          kubectl get pods -n monitoring
+          kubectl describe daemonset myapp -n monitoring
+          kubectl describe service myapp-service -n monitoring
