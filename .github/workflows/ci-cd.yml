@@ -8,10 +8,10 @@ on:
     branches: 
       - main
     tags: 
-      - '1*'
+      - 'v*'
 
 env:
-  IMAGE_TAG: slavazakariev/nginx-app:1.0.0
+  IMAGE_TAG: slavazakariev/nginx-app
   RELEASE_NAME: nginx-app
   NAMESPACE: monitoring
 
