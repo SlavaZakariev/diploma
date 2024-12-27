@@ -62,7 +62,37 @@ jobs:
         with:
           method: kubeconfig
           kubeconfig: ${{ secrets.KUBE_CONFIG_DATA }}
-          
-      - name: Deploy to Kubernetes with Helm
+
+      - name: Extract version from commit messages
         run: |
-          helm upgrade --install ${{ env.RELEASE_NAME }} ./nginx_ci --namespace ${{ env.NAMESPACE }} --set image.tag=${{ env.VERSION }}
+          VERSION=$(git log -1 --pretty=format:%B)
+          if [[ ! -z "$VERSION" ]]; then
+            echo "VERSION=$VERSION" >> $GITHUB_ENV
+          else
+            echo "No version found in the commit message"
+            exit 1
+          fi
+
+      - name: Replace image tag in deploy.yaml
+        if: env.DEPLOY == 'false'
+       
+        run: |
+          sed -i "s|image: slavazakariev/nginx-app:.*|image: ${{ env.IMAGE_TAG }}|" ./nginx-app/deploy.yaml
+        env:
+          IMAGE_TAG: slavazakariev/nginx-app:${{ env.VERSION }}
+      
+      - name: Create kubeconfig
+        run: |
+          mkdir -p $HOME/.kube/
+      - name: Authenticate to Kubernetes cluster
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        run: |
+          echo "${KUBE_CONFIG_DATA}" > ${HOME}/.kube/config
+      - name: Apply Kubernetes manifests
+        run: |
+          kubectl apply -f ./nginx-app/deploy.yaml 
+      
+      # - name: Deploy to Kubernetes with Helm
+      #   run: |
+      #     helm upgrade --install ${{ env.RELEASE_NAME }} ./nginx_ci --namespace ${{ env.NAMESPACE }} --set image.tag=${{ env.VERSION }}
