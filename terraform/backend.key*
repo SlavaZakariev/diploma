@@ -1,0 +1,8 @@
+endpoint = "storage.yandexcloud.net"
+bucket = "zakariev-netology-bucket"
+region = "ru-central1"
+key = "terraform/terraform.tfstate"
+access_key = "YCAJ_____"
+secret_key = "YCO9M_____"
+skip_region_validation = true
+skip_credentials_validation = true
