@@ -53,7 +53,7 @@
 
 ### Решение 1
 
-1. Создаём файлы конфигурации [terraform](https://github.com/SlavaZakariev/diploma/tree/main/terraform) для разворачивания инфраструктуры в Yandex Cloud
+1. Создаём файлы конфигурации [terraform для bucket](https://github.com/SlavaZakariev/diploma/tree/main/terraform/bucket) для инфраструктуры в Yandex Cloud
 
 - [bucket.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/bucket/bucket.tf) - для создания bucket хранилища и сервисной учётной записи
 - [var.bucket.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/bucket/var.bucket.tf) - переменные для bucket в своём подкаталоге
@@ -67,9 +67,11 @@
 
 ![bucket-yc](https://github.com/SlavaZakariev/diploma/blob/ffaa06b378742674fe0af24870a2940bd4e1e2ba/images/dip_1_1.2.jpg)
 
-3. Проверяем ресурс bucket через веб-интерфейс
+4. Проверяем ресурс bucket через веб-интерфейс
 
 ![bucket-web](https://github.com/SlavaZakariev/diploma/blob/ffaa06b378742674fe0af24870a2940bd4e1e2ba/images/dip_1_1.3.jpg)
+
+5. Создаём основные файлы конфигурации [terraform](https://github.com/SlavaZakariev/diploma/tree/main/terraform) для инфраструктуры в Yandex Cloud
 
 - [network.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/network.tf) - конфигурация сети
 - [vars.network.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/vars.network.tf) - переменные для сети
@@ -81,9 +83,17 @@
 - [metadata.yaml](https://github.com/SlavaZakariev/diploma/blob/main/terraform/metadata.yaml) - публичный ssh-ключ
 - [outputs.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/output.tf) - вывод IP адресов вновь созданных ресоурсов в терминале
 
+6. Запускаем создание ресурсов
 
+![init-main](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_2_1.1.jpg)
 
-2. 
+7. Проверяем созданные основные ресурсы через терминал YC
+
+![main-yc](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_2_1.3.jpg)
+
+8. Проверяем ресурс основные через веб-интерфейс
+
+![main-web](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_2_1.2.jpg)
 
 ---
 
