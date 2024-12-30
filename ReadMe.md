@@ -321,7 +321,7 @@ docker pull slavazakariev/nginx-app:1.0.0
 
 ### Решение 4
 
-1. Создаём пространство имём `monitoring` на созданном нами кластере Кубернетес в YC
+1. Создаём пространство имён `monitoring` на созданном нами кластере Кубернетес в YC
 
 ![ns](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_4_1.1.jpg)
 
