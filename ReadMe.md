@@ -400,7 +400,9 @@ spec:
 
 ![deploy](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_4_1.9.jpg)
 
-11. Проверим доступность приложение 
+11. Проверим доступность приложение по ссылке: [http://89.169.128.19:30080/](http://89.169.128.19:30080/)
+
+![nginx-app-check](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_4_1.10.jpg)
 
 ---
 
