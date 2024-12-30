@@ -198,7 +198,7 @@ all:
 
 ### Решение 3
 
-1. В папке проекта, созданём [Dockerfile](https://github.com/SlavaZakariev/diploma/blob/main/nginx-app/Dockerfile)
+1. В папке проекта, создаём [Dockerfile](https://github.com/SlavaZakariev/diploma/blob/main/nginx-app/Dockerfile)
 
 ```dockerfile
 # Root image
@@ -221,7 +221,7 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 CMD curl -f http://localhos
 EXPOSE 80
 ```
 
-2. Создаём каталог `conf` и внутри файл [nginx.conf](https://github.com/SlavaZakariev/diploma/blob/main/nginx-app/conf/nginx.conf) для конфигруации приложения
+2. Создаём каталог `conf` и внутри файл [nginx.conf](https://github.com/SlavaZakariev/diploma/blob/main/nginx-app/conf/nginx.conf) для конфигурации приложения
 
 ```java
 user nginx;
@@ -269,7 +269,7 @@ http {
 
 ![build](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_3_1.1.jpg)
 
-5. Проверяем наличие созданного сминка
+5. Проверяем наличие созданного снимка
 
 ![image](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_3_1.2.jpg)
 
@@ -316,7 +316,94 @@ docker pull slavazakariev/nginx-app:1.0.0
 2. Http доступ на 80 порту к web интерфейсу grafana.
 3. Дашборды в grafana отображающие состояние Kubernetes кластера.
 4. Http доступ на 80 порту к тестовому приложению.
+
 ---
+
+### Решение 4
+
+1. Создаём пространство имём `monitoring` на созданном нами кластере Кубернетес в YC
+
+![ns](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_4_1.1.jpg)
+
+2. Устанавливаем HELM для удобства разворачивания приложений в Кубернетесе
+
+![helm](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_4_1.2.jpg)
+
+3. Устанавливаем репозиторий `prometheus-community` с помощью HELM и обновляем репозиторий
+
+![helm-repo](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_4_1.3.jpg)
+
+4. Устанавливаем готовый пакет `grafana + prometheus + alertingmanager` в пространстве имён `monitoring` с помощью HELM
+
+![helm-install](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_4_1.4.jpg)
+
+5. Проверяем наличие на кластере вновь созданных объектов системы мониторинга в пространстве имён `monitoring`
+
+![get-pods-monit](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_4_1.5.jpg)
+
+6. Для `prometheus` и `grafana` изменяем вручную порты и тип сервиса для возможности доступа к ним
+
+![svc-port](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_4_1.6.jpg)
+
+7. Веб-страница [prometheus](http://89.169.128.19:30010/query)
+
+![web-prometheus](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_4_1.7.jpg)
+
+8. Веб-страница [gragana](http://89.169.128.19:30020)
+
+![web-grafana](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_4_1.8.jpg)
+
+9. Создадим [deployment.yaml](https://github.com/SlavaZakariev/diploma/blob/main/kubernetes/nginx-app/deployment.yaml) для нашего приложения `nginx-app` на порту 30080
+
+```yaml
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: myapp
+  namespace: monitoring
+  labels:
+    app: myapp
+spec:
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp
+        image: slavazakariev/nginx-app:1.0.0
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+  namespace: monitoring
+spec:
+  selector:
+    app: myapp
+  type: NodePort
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 80
+    nodePort: 30080
+```
+
+10. Развернём приложение в пространство имён `monitoring`
+
+![deploy](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_4_1.9.jpg)
+
+11. Проверим доступность приложение 
+
+---
+
 ### Установка и настройка CI/CD
 
 Осталось настроить ci/cd систему для автоматической сборки docker image и деплоя приложения при изменении кода.
