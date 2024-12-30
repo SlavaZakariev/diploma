@@ -91,7 +91,7 @@
 
 ![main-yc](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_2_1.3.jpg)
 
-8. Проверяем ресурс основные через веб-интерфейс
+8. Проверяем основные ресурсы через веб-интерфейс
 
 ![main-web](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_2_1.2.jpg)
 
@@ -131,7 +131,7 @@
 declare -a IPS=(89.169.128.19 89.169.173.194 51.250.37.240)
 ```
 
-3. Получаем файл [hosts.yaml](https://github.com/SlavaZakariev/diploma/blob/main/kubespray/hosts.yaml). Убеждаемся в правильности расределения узлов для `kube_control_plane`, `kube_node` и `etcd`
+3. Получаем файл [hosts.yaml](https://github.com/SlavaZakariev/diploma/blob/main/kubespray/hosts.yaml). Убеждаемся в правильности распределения узлов для `kube_control_plane`, `kube_node` и `etcd`
 
 ```yaml
 all:
@@ -167,11 +167,11 @@ all:
       hosts: {}
 ```
 
-4. Запускаем сборник **ansible**
+4. Запускаем сборник **ansible-playbook**
 
 ![ansible](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_2_1.5.jpg)
 
-5. Проверяем работоспособность кластера пустё проверки статуса узлов и подов во всех пространствах имён
+5. Проверяем работоспособность кластера путём проверки статуса узлов и подов во всех пространствах имён
 
 ![get-pods](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_2_1.6.jpg)
 
