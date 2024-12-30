@@ -198,6 +198,103 @@ all:
 
 ### Решение 3
 
+1. В папке проекта, созданём [Dockerfile](https://github.com/SlavaZakariev/diploma/blob/main/nginx-app/Dockerfile)
+
+```dockerfile
+# Root image
+FROM nginx:1.25.5
+
+# Author
+LABEL author=Zakariev
+
+# Configuration
+COPY conf /ect/nginx
+# Content file
+COPY content /usr/share/nginx/html
+
+# Workdir
+WORKDIR /usr/share/nginx/html
+
+# Health Check
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 CMD curl -f http://localhost/ || exit 1
+
+EXPOSE 80
+```
+
+2. Создаём каталог `conf` и внутри файл [nginx.conf](https://github.com/SlavaZakariev/diploma/blob/main/nginx-app/conf/nginx.conf) для конфигруации приложения
+
+```java
+user nginx;
+worker_processes 1;
+error_log /var/log/nginx/error.log warn;
+
+events {
+    worker_connections 1024;
+    multi_accept on;
+}
+
+http {
+    server {
+        listen   80;
+
+        location / {
+            gzip off;
+            root /var/www/html/;
+            index index.html;
+        }
+    }
+    keepalive_timeout  60;
+}
+```
+
+3. Создаём каталог `content` и внутри файл [index.html](https://github.com/SlavaZakariev/diploma/blob/main/nginx-app/content/index.html) для страницы приложения
+
+```html
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Diploma of Viacheslav Zakariev</title>
+</head>
+
+<body>
+    <h2 style="margin-top: 150px; text-align: center;">Diploma of Viacheslav Zakariev (DevOps-engineer, group FOPS-12, Netology)</h2>
+</body>
+
+</html>
+```
+
+4. Запускаем создание снимка с тэгом `1.0.0`
+
+![build](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_3_1.1.jpg)
+
+5. Проверяем наличие созданного сминка
+
+![image](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_3_1.2.jpg)
+
+6. Проверяем работоспособность нашего образа, запустив контейнер
+
+![run](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_3_1.3.jpg)
+
+7. Проверяем доступность страницы приложения
+
+![web-index](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_3_1.4.jpg)
+
+8. Публикуем наш снимок в DockerHub
+
+![push-dockerhub](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_3_1.5.jpg)
+
+9. Проверяем наличие нашего снимка в [DockerHub](https://hub.docker.com/r/slavazakariev/nginx-app/tags)
+
+![check-dockerhub](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_3_1.6.jpg)
+
+10. Снимок с тэгом `1.0.0` доступен для скачивания по команде:
+
+```bash
+docker pull slavazakariev/nginx-app:1.0.0
+```
+
 ---
 
 ### Подготовка cистемы мониторинга и деплой приложения
