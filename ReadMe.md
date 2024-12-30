@@ -79,15 +79,15 @@
 - [vars.provider.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/vars.provider.tf) - переменные для облачного провайдера YC
 - [vm.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/vm.tf) - конфигурация ресурсов виртуальных машин
 - [vars.vm.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/vars.vm.tf) - переменные для ресурсов виртуальных машин
-- [locals.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/locals.tf) - конфигурация ssh-ключа для виртуалных машин
+- [locals.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/locals.tf) - конфигурация ssh-ключа для виртуальных машин
 - [metadata.yaml](https://github.com/SlavaZakariev/diploma/blob/main/terraform/metadata.yaml) - публичный ssh-ключ
-- [outputs.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/output.tf) - вывод IP адресов вновь созданных ресоурсов в терминале
+- [outputs.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/output.tf) - вывод IP адресов вновь созданных ресурсов в терминале
 
 6. Запускаем создание ресурсов
 
 ![init-main](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_2_1.1.jpg)
 
-7. Проверяем созданные основные ресурсы через терминал YC
+8. Проверяем созданные основные ресурсы через терминал YC (Ресурсы созданы в зоне a, b, d согласно условию)
 
 ![main-yc](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_2_1.3.jpg)
 
@@ -119,11 +119,63 @@
 
 ---
 
+### Решение 2
+
 1. Устанавливаем статические внешние IP адреса, чтобы при выключении ВМ, адреса не сменялись
 
 ![IP-static](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_2_1.4.jpg)
 
+2. Устанавливаем через кластер Кубернетес через `kubespray`. Прописываем наши внешние адреса, чтобы сформировать файл **inventory**
+
+```bash
+
+```
+declare -a IPS=(89.169.128.19 89.169.173.194 51.250.37.240)
 ---
+
+3. Получаем файл [hosts.yaml](https://github.com/SlavaZakariev/diploma/blob/main/kubespray/hosts.yaml). Убеждаемся в правильности расределения узлов для `kube_control_plane`, `kube_node` и `etcd`
+
+```yaml
+all:
+  hosts:
+    k8s-master-01:
+      ansible_host: 89.169.128.19
+      ip: 10.10.1.11
+      access_ip: 10.10.1.11
+    k8s-worker-01:
+      ansible_host: 89.169.173.194
+      ip: 10.10.2.12
+      access_ip: 10.10.2.12
+    k8s-worker-02:
+      ansible_host: 51.250.37.240
+      ip: 10.10.3.13
+      access_ip: 10.10.3.13
+  children:
+    kube_control_plane:
+      hosts:
+        k8s-master-01:
+    kube_node:
+      hosts:
+        k8s-worker-01:
+        k8s-worker-02:
+    etcd:
+      hosts:
+        k8s-master-01:
+    k8s_cluster:
+      children:
+        kube_control_plane:
+        kube_node:
+    calico_rr:
+      hosts: {}
+```
+
+4. Запускаем сборник **ansible**
+
+![ansible](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_2_1.5.jpg)
+
+5. Проверяем работоспособность кластера
+
+![get-pods](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_2_1.6.jpg)
 
 ### Создание тестового приложения
 
