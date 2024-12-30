@@ -128,10 +128,8 @@
 2. Устанавливаем через кластер Кубернетес через `kubespray`. Прописываем наши внешние адреса, чтобы сформировать файл **inventory**
 
 ```bash
-
-```
 declare -a IPS=(89.169.128.19 89.169.173.194 51.250.37.240)
----
+```
 
 3. Получаем файл [hosts.yaml](https://github.com/SlavaZakariev/diploma/blob/main/kubespray/hosts.yaml). Убеждаемся в правильности расределения узлов для `kube_control_plane`, `kube_node` и `etcd`
 
@@ -173,9 +171,11 @@ all:
 
 ![ansible](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_2_1.5.jpg)
 
-5. Проверяем работоспособность кластера
+5. Проверяем работоспособность кластера пустё проверки статуса узлов и подов во всех пространствах имён
 
 ![get-pods](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_2_1.6.jpg)
+
+---
 
 ### Создание тестового приложения
 
@@ -195,6 +195,11 @@ all:
 2. Regestry с собранным docker image. В качестве regestry может быть DockerHub или [Yandex Container Registry](https://cloud.yandex.ru/services/container-registry), созданный с помощью terraform.
 
 ---
+
+### Решение 3
+
+---
+
 ### Подготовка cистемы мониторинга и деплой приложения
 
 Уже должны быть готовы конфигурации для автоматического создания облачной инфраструктуры и поднятия Kubernetes кластера.  
