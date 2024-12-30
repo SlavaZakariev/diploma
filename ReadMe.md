@@ -50,6 +50,43 @@
 2. Полученная конфигурация инфраструктуры является предварительной, поэтому в ходе дальнейшего выполнения задания возможны изменения.
 
 ---
+
+### Решение 1
+
+1. Создаём файлы конфигурации [terraform](https://github.com/SlavaZakariev/diploma/tree/main/terraform) для разворачивания инфраструктуры в Yandex Cloud
+
+- [bucket.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/bucket/bucket.tf) - для создания bucket хранилища и сервисной учётной записи
+- [var.bucket.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/bucket/var.bucket.tf) - переменные для bucket в своём подкаталоге
+- [provider.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/bucket/provider.tf) - для указания настроек провайдера облака
+
+2. Запускаем создание хранилища bucket
+
+![init](https://github.com/SlavaZakariev/diploma/blob/ffaa06b378742674fe0af24870a2940bd4e1e2ba/images/dip_1_1.1.jpg)
+
+3. Проверяем созданные ресурсы bucket и SA через терминал YC
+
+![bucket-yc](https://github.com/SlavaZakariev/diploma/blob/ffaa06b378742674fe0af24870a2940bd4e1e2ba/images/dip_1_1.2.jpg)
+
+3. Проверяем ресурс bucket через веб-интерфейс
+
+![bucket-web](https://github.com/SlavaZakariev/diploma/blob/ffaa06b378742674fe0af24870a2940bd4e1e2ba/images/dip_1_1.3.jpg)
+
+- [network.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/network.tf) - конфигурация сети
+- [vars.network.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/vars.network.tf) - переменные для сети
+- [provider.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/provider.tf) - конфигурация для облачного провайдера YC
+- [vars.provider.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/vars.provider.tf) - переменные для облачного провайдера YC
+- [vm.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/vm.tf) - конфигурация ресурсов виртуальных машин
+- [vars.vm.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/vars.vm.tf) - переменные для ресурсов виртуальных машин
+- [locals.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/locals.tf) - конфигурация ssh-ключа для виртуалных машин
+- [metadata.yaml](https://github.com/SlavaZakariev/diploma/blob/main/terraform/metadata.yaml) - публичный ssh-ключ
+- [outputs.tf](https://github.com/SlavaZakariev/diploma/blob/main/terraform/output.tf) - вывод IP адресов вновь созданных ресоурсов в терминале
+
+
+
+2. 
+
+---
+
 ### Создание Kubernetes кластера
 
 На этом этапе необходимо создать [Kubernetes](https://kubernetes.io/ru/docs/concepts/overview/what-is-kubernetes/) кластер на базе предварительно созданной инфраструктуры.   Требуется обеспечить доступ к ресурсам из Интернета.
