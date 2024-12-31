@@ -427,11 +427,13 @@ spec:
 
 ### Решение 5
 
-1. Создаём токен на DockerHub для аутентификации при сборке.
+1. Создаём новый репозиторий ![diploma_cicd](https://github.com/SlavaZakariev/diploma_cicd) для конфигурирования CI\CD
+
+2. Создаём токен на DockerHub для аутентификации при сборке.
 
 ![token](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_5_1.1.jpg)
 
-2. Добавляем пользователя, токен от DockerHub, а также конфигурационный файл нашего Kubernetes в GitHub для возможности полного цикла сборки и публикации CI\CD.
+3. Добавляем пользователя, токен от DockerHub, а также конфигурационный файл нашего Kubernetes в GitHub для возможности полного цикла сборки и публикации CI\CD.
 
 ![token](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_5_1.2.jpg)
 
