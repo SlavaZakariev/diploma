@@ -427,7 +427,13 @@ spec:
 
 ### Решение 5
 
+1. Создаём токен на DockerHub для аутентификации при сборке.
 
+![token](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_5_1.1.jpg)
+
+2. Добавляем пользователя, токен от DockerHub, а также конфигурационный файл нашего Kubernetes в GitHub для возможности полного цикла сборки и публикации CI\CD.
+
+![token](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_5_1.2.jpg)
 
 ---
 
