@@ -427,7 +427,7 @@ spec:
 
 ### Решение 5
 
-1. Создаём новый репозиторий ![diploma_cicd](https://github.com/SlavaZakariev/diploma_cicd) для конфигурирования CI\CD
+1. Создаём новый репозиторий [diploma_cicd](https://github.com/SlavaZakariev/diploma_cicd) для конфигурирования CI\CD
 
 2. Создаём токен на DockerHub для аутентификации при сборке.
 
