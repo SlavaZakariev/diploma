@@ -289,7 +289,7 @@ http {
 
 ![check-dockerhub](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_3_1.6.jpg)
 
-10. Снимок с тэгом `1.0.0` доступен для скачивания по команде:
+10. Снимок с тэгом `v1.0.0` доступен для скачивания по команде:
 
 ```bash
 docker pull slavazakariev/nginx-app:v1.0.0
@@ -375,7 +375,7 @@ spec:
     spec:
       containers:
       - name: myapp
-        image: slavazakariev/nginx-app:1.0.0
+        image: slavazakariev/nginx-app:v1.0.0
       restartPolicy: Always
 
 ---
