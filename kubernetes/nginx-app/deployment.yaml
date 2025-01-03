@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: myapp
-        image: slavazakariev/nginx-app:1.0.0
+        image: slavazakariev/nginx-app:v1.0.0
       restartPolicy: Always
 
 ---
