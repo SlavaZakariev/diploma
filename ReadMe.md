@@ -292,7 +292,7 @@ http {
 10. Снимок с тэгом `1.0.0` доступен для скачивания по команде:
 
 ```bash
-docker pull slavazakariev/nginx-app:1.0.0
+docker pull slavazakariev/nginx-app:v1.0.0
 ```
 
 ---
