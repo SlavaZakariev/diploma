@@ -265,17 +265,17 @@ http {
 </html>
 ```
 
-4. Запускаем создание снимка с тэгом `1.0.0`
+4. Запускаем создание снимка с тэгом `v1.0.0`
 
-![build](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_3_1.1.jpg)
+![build](https://github.com/SlavaZakariev/diploma/blob/d1087af6d5ada6952153e77a4cff946a805a497f/images/dip_3_1.1.jpg)
 
 5. Проверяем наличие созданного снимка
 
-![image](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_3_1.2.jpg)
+![image](https://github.com/SlavaZakariev/diploma/blob/d1087af6d5ada6952153e77a4cff946a805a497f/images/dip_3_1.2.jpg)
 
 6. Проверяем работоспособность нашего образа, запустив контейнер
 
-![run](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_3_1.3.jpg)
+![run](https://github.com/SlavaZakariev/diploma/blob/d1087af6d5ada6952153e77a4cff946a805a497f/images/dip_3_1.3.jpg)
 
 7. Проверяем доступность страницы приложения
 
@@ -283,7 +283,7 @@ http {
 
 8. Публикуем наш снимок в DockerHub
 
-![push-dockerhub](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_3_1.5.jpg)
+![push-dockerhub](https://github.com/SlavaZakariev/diploma/blob/d1087af6d5ada6952153e77a4cff946a805a497f/images/dip_3_1.5.jpg)
 
 9. Проверяем наличие нашего снимка в [DockerHub](https://hub.docker.com/r/slavazakariev/nginx-app/tags)
 
