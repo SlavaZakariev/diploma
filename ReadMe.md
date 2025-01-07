@@ -469,6 +469,12 @@ spec:
 
 ![myapp](https://github.com/SlavaZakariev/diploma/blob/112862a4d13cb1c55d21f76a2dfd9aab798c7fc0/images/dip_5_1.6.jpg)
 
+12. Снимок в [DockerHub](https://hub.docker.com/repository/docker/slavazakariev/nginx-app/tags)
+
+```bash
+docker pull slavazakariev/nginx-app:v1.0.1
+```
+
 ---
 
 ## Что необходимо для сдачи задания?
