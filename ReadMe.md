@@ -443,33 +443,132 @@ spec:
 
 ![token](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_5_1.2.jpg)
 
-4. Подготавливаем конфигурацию для версии `v1.0.1`
+4. Подготавливаем в GitHub Actions манифест CI\CD
 
-5. Публикуем всё в [git](https://github.com/SlavaZakariev/diploma_cicd)
+<details>
+<summary>.github/workflows/main.yaml</summary>
+
+```yaml
+name: CI/CD Pipeline for nginx-app # Имя конвеера
+
+on:                 # Триггер, по которому будет запускаться конвеер
+  push:             # Запускает рабочий процесс по событиям push запросов
+    branches: main  # В какую ветку обращается конвеер
+    tags:
+      - 'v*'
+
+env:                             # Описание переменных
+  IMAGE: slavazakariev/nginx-app # Переменная образа в Docker Hub
+  RELEASE_NAME: nginx-app        # Переменная приложения в Docker Hub
+  NAMESPACE: monitoring          # Переменная пространства имён в Kubernetes
+
+jobs:                             # Задачи, которые будут выполняться в рамках конвеера
+  build-and-push:                 # Тип задачи - Сборка и Публикация
+    name: Build Docker image      # Имя задачи - Сборка образа
+    runs-on: ubuntu-22.04         # Версия ОС машины, на которой будет выполняться задача
+    steps:                        # Шаги, которые будут выполняться в процессе
+      - name: Checkout            # Имя шага
+        uses: actions/checkout@v3 # Шаблон GitHub - Доступ к содержимому репозитория
+        
+      - name: Login to Docker Hub    # Имя шага
+        uses: docker/login-action@v3 # Шаблон GitHub - Доступ в Doсker Hub 
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }} # Логин в Doсker Hub
+          password: ${{ secrets.DOCKERHUB_TOKEN }}    # Пароль в Doсker Hub
+
+      - name: Set up Docker Buildx          # Имя шага
+        uses: docker/setup-buildx-action@v3 # Шаблон GitHub - Сборка содержимого репозитория
+
+      - name: Extract version from commit messages # Имя шага
+        run: |                                     # Назначение переменной скриптом
+          VERSION=$(git log -1 --pretty=format:%B)
+          if [[ ! -z "$VERSION" ]]; then
+            echo "VERSION=$VERSION" >> $GITHUB_ENV
+          else
+            echo "No version found in the commit message"
+            exit 1
+          fi
+
+      - name: Build and push              # Имя шага
+        uses: docker/build-push-action@v5 # Шаблон GitHub - Cоздать и отправить образ в Docker Hub
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ env.IMAGE }}:${{ env.VERSION }}
+
+  deploy:                      # Задачи публикации, которые будут выполняться в рамках конвеера
+    needs: build-and-push      # Зависимости между заданиями
+    name: Deploy to Kubernetes # Имя задачи - Публикация в Кубернетес
+    if: startsWith(github.ref, 'refs/heads/main') || startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-22.04      # Версия ОС машины, на которой будет выполняться задача
+    steps:
+      - name: Checkout            # Имя шага
+        uses: actions/checkout@v3 # Шаблон GitHub - Сборка содержимого репозитория
+        
+      - name: Configure Kubernetes     # Имя шага
+        uses: azure/k8s-set-context@v3 # Шаблон GitHub - Создать контекст для Kubernetes
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBE_CONFIG_DATA }}
+
+      - name: Extract version from commit messages # Имя шага
+        run: |                                     # Назначение переменной скриптом
+          VERSION=$(git log -1 --pretty=format:%B)
+          if [[ ! -z "$VERSION" ]]; then
+            echo "VERSION=$VERSION" >> $GITHUB_ENV
+          else
+            echo "No version found in the commit message"
+            exit 1
+          fi
+
+      - name: Replace image tag in deployment.yaml # Имя шага
+        if: env.DEPLOY == 'false'
+        run: |
+          sed -i "s|image: slavazakariev/nginx-app:.*|image: ${{ env.IMAGE }}|" deployment.yaml
+        env:
+          IMAGE_TAG: slavazakariev/nginx-app:${{ env.VERSION }}
+      
+      - name: Create kubeconfig file # Имя шага
+        run: mkdir -p $HOME/.kube/   # Создание каталога для файла аутентификации Kubernetes
+
+      - name: Authenticate to Kubernetes cluster               # Имя шага
+        env:                                                   # Аутентификация через переменную
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}    # Переменная с конфигом для Kubernetes
+        run: echo "${KUBE_CONFIG_DATA}" > ${HOME}/.kube/config # Добавить конфиг в файл по умолчанию
+
+      - name: Apply Kubernetes manifest
+        run: kubectl apply -f deployment.yaml # Запуск приложения в Кубернетесе
+```
+</details>
+
+5. Подготавливаем конфигурацию для версии `v1.0.1`
+
+6. Публикуем всё в [git](https://github.com/SlavaZakariev/diploma_cicd)
 
 ![git-add](https://github.com/SlavaZakariev/diploma/blob/872432f1e40473680b81c9b82662e6d8e253bfe0/images/dip_5_1.3.jpg)
 
-6. Результат автоматического выполнения после публикации коммита в [Ci\CD GitHub Actions](https://github.com/SlavaZakariev/diploma_cicd/actions/runs/12655619034)
+7. Результат автоматического выполнения после публикации коммита в [Ci\CD GitHub Actions](https://github.com/SlavaZakariev/diploma_cicd/actions/runs/12655619034)
 
-7. Привяжем тэг `v1.0.1` по хэшу последнего коммита и опубликуем в [git](https://github.com/SlavaZakariev/diploma_cicd)
+8. Привяжем тэг `v1.0.1` по хэшу последнего коммита и опубликуем в [git](https://github.com/SlavaZakariev/diploma_cicd)
 
 ![git-add-tag](https://github.com/SlavaZakariev/diploma/blob/872432f1e40473680b81c9b82662e6d8e253bfe0/images/dip_5_1.4.jpg)
 
-8. Результат автоматического выполнения после публикации [тэга](https://github.com/SlavaZakariev/diploma_cicd/tags) в [Ci\CD GitHub Actions](https://github.com/SlavaZakariev/diploma_cicd/actions/runs/12655856482)
+9. Результат автоматического выполнения после публикации [тэга](https://github.com/SlavaZakariev/diploma_cicd/tags) в [Ci\CD GitHub Actions](https://github.com/SlavaZakariev/diploma_cicd/actions/runs/12655856482)
 
-9. Результат выполнения в списке всех [СI\CD GitHub Actions > All workflows](https://github.com/SlavaZakariev/diploma_cicd/actions)
+10. Результат выполнения в списке всех [СI\CD GitHub Actions > All workflows](https://github.com/SlavaZakariev/diploma_cicd/actions)
 
 ![workflows](https://github.com/SlavaZakariev/diploma/blob/112862a4d13cb1c55d21f76a2dfd9aab798c7fc0/images/dip_5_1.5.jpg)
 
-10. Под в кубернетесе
+11. Под в кубернетесе
 
 ![pods-k8s](https://github.com/SlavaZakariev/diploma/blob/112862a4d13cb1c55d21f76a2dfd9aab798c7fc0/images/dip_5_1.7.jpg)
 
-11. Обновлённая страницы приложения [http://89.169.128.19:30080/](http://89.169.128.19:30080/)
+12. Обновлённая страницы приложения [http://89.169.128.19:30080/](http://89.169.128.19:30080/)
 
 ![myapp](https://github.com/SlavaZakariev/diploma/blob/112862a4d13cb1c55d21f76a2dfd9aab798c7fc0/images/dip_5_1.6.jpg)
 
-12. Снимок в [DockerHub](https://hub.docker.com/repository/docker/slavazakariev/nginx-app/tags)
+13. Снимок в [DockerHub](https://hub.docker.com/repository/docker/slavazakariev/nginx-app/tags)
 
 ```bash
 docker pull slavazakariev/nginx-app:v1.0.1
