@@ -175,6 +175,11 @@ all:
 
 ![get-pods](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_2_1.6.jpg)
 
+6. Проверяем работоспособность кластера со своего локального ПК \
+   **Примечание:** Необходимо обновить сертификаты `/etc/kubernetes/ssl/apiserver.*`, с включением внешнего IP, если выдаёт ошибку.
+
+![get-pods-external](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_2_1.7.jpg)
+
 ---
 
 ### Создание тестового приложения
