@@ -443,6 +443,20 @@ spec:
 
 ![token](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_5_1.2.jpg)
 
+4. Подготавливаем конфигурацию для версии `v1.0.1`
+
+5. Публикуем всё в [git](https://github.com/SlavaZakariev/diploma_cicd)
+
+![git-add](https://github.com/SlavaZakariev/diploma/blob/872432f1e40473680b81c9b82662e6d8e253bfe0/images/dip_5_1.3.jpg)
+
+6. Результат автоматического выполнения после публикации коммита [Ci\CD GitHub Actions](https://github.com/SlavaZakariev/diploma_cicd/actions/runs/12655619034)
+
+7. Привяжем тэг `v1.0.1` по хэшу последнего коммита и опубликуем в [git](https://github.com/SlavaZakariev/diploma_cicd)
+
+![git-add-tag](https://github.com/SlavaZakariev/diploma/blob/872432f1e40473680b81c9b82662e6d8e253bfe0/images/dip_5_1.4.jpg)
+
+8. Результат автоматического выполнения после публикации тэга [Ci\CD GitHub Actions](https://github.com/SlavaZakariev/diploma_cicd/actions/runs/12655619034)
+
 ---
 
 ## Что необходимо для сдачи задания?
