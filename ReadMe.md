@@ -443,7 +443,7 @@ spec:
 
 ![token](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_5_1.2.jpg)
 
-4. Подготавливаем в GitHub Actions манифест CI\CD
+4. Подготавливаем в **GitHub Actions** манифест **CI\CD**
 
 <details>
 <summary>.github/workflows/main.yaml</summary>
