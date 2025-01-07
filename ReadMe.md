@@ -349,7 +349,7 @@ docker pull slavazakariev/nginx-app:v1.0.0
 
 ![web-prometheus](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_4_1.7.jpg)
 
-8. Веб-страница [gragana](http://89.169.128.19:30020)
+8. Веб-страница [grafana](http://89.169.128.19:30020)
 
 ![web-grafana](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_4_1.8.jpg)
 
