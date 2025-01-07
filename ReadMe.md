@@ -455,7 +455,19 @@ spec:
 
 ![git-add-tag](https://github.com/SlavaZakariev/diploma/blob/872432f1e40473680b81c9b82662e6d8e253bfe0/images/dip_5_1.4.jpg)
 
-8. Результат автоматического выполнения после публикации тэга [Ci\CD GitHub Actions](https://github.com/SlavaZakariev/diploma_cicd/actions/runs/12655619034)
+8. Результат автоматического выполнения после публикации тэга [Ci\CD GitHub Actions](https://github.com/SlavaZakariev/diploma_cicd/actions/runs/12655856482)
+
+9. Результат выполнения в списке всех [СI\CD GitHub Actions > All workflows](https://github.com/SlavaZakariev/diploma_cicd/actions)
+
+![workflows](https://github.com/SlavaZakariev/diploma/blob/112862a4d13cb1c55d21f76a2dfd9aab798c7fc0/images/dip_5_1.5.jpg)
+
+10. Под в кубернетесе
+
+![pods-k8s](https://github.com/SlavaZakariev/diploma/blob/112862a4d13cb1c55d21f76a2dfd9aab798c7fc0/images/dip_5_1.6.jpg)
+
+11. Обновлённая страницы приложения [http://89.169.128.19:30080/](http://89.169.128.19:30080/)
+
+![myapp](https://github.com/SlavaZakariev/diploma/blob/112862a4d13cb1c55d21f76a2dfd9aab798c7fc0/images/dip_5_1.7.jpg)
 
 ---
 
