@@ -560,7 +560,7 @@ jobs:                             # Задачи, которые будут вы
 
 ![workflows](https://github.com/SlavaZakariev/diploma/blob/112862a4d13cb1c55d21f76a2dfd9aab798c7fc0/images/dip_5_1.5.jpg)
 
-11. Проверим статус пода в **Kubernetes**
+11. Проверим статус пода опубликованного приложения в **Kubernetes**
 
 ![pods-k8s](https://github.com/SlavaZakariev/diploma/blob/112862a4d13cb1c55d21f76a2dfd9aab798c7fc0/images/dip_5_1.7.jpg)
 
