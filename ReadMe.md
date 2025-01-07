@@ -176,7 +176,8 @@ all:
 ![get-pods](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_2_1.6.jpg)
 
 6. Проверяем работоспособность кластера со своего локального ПК \
-   **Примечание:** Необходимо обновить сертификаты `/etc/kubernetes/ssl/apiserver.*`, с включением внешнего IP, если выдаёт ошибку.
+   **Примечание:** Необходимо обновить сертификаты `/etc/kubernetes/ssl/apiserver.*`, с указанием внешнего IP, при выдаёт ошибку: \
+   `Unable to connect to the server: tls: failed to verify certificate: x509:`
 
 ![get-pods-external](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_2_1.7.jpg)
 
