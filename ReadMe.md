@@ -449,13 +449,13 @@ spec:
 
 ![git-add](https://github.com/SlavaZakariev/diploma/blob/872432f1e40473680b81c9b82662e6d8e253bfe0/images/dip_5_1.3.jpg)
 
-6. Результат автоматического выполнения после публикации коммита [Ci\CD GitHub Actions](https://github.com/SlavaZakariev/diploma_cicd/actions/runs/12655619034)
+6. Результат автоматического выполнения после публикации коммита в [Ci\CD GitHub Actions](https://github.com/SlavaZakariev/diploma_cicd/actions/runs/12655619034)
 
 7. Привяжем тэг `v1.0.1` по хэшу последнего коммита и опубликуем в [git](https://github.com/SlavaZakariev/diploma_cicd)
 
 ![git-add-tag](https://github.com/SlavaZakariev/diploma/blob/872432f1e40473680b81c9b82662e6d8e253bfe0/images/dip_5_1.4.jpg)
 
-8. Результат автоматического выполнения после публикации [тэга](https://github.com/SlavaZakariev/diploma_cicd/tags) [Ci\CD GitHub Actions](https://github.com/SlavaZakariev/diploma_cicd/actions/runs/12655856482)
+8. Результат автоматического выполнения после публикации [тэга](https://github.com/SlavaZakariev/diploma_cicd/tags) в [Ci\CD GitHub Actions](https://github.com/SlavaZakariev/diploma_cicd/actions/runs/12655856482)
 
 9. Результат выполнения в списке всех [СI\CD GitHub Actions > All workflows](https://github.com/SlavaZakariev/diploma_cicd/actions)
 
