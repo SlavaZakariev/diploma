@@ -287,15 +287,15 @@ http {
 
 ![web-index](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_3_1.4.jpg)
 
-8. Публикуем наш снимок в DockerHub
+8. Публикуем наш образ в DockerHub
 
 ![push-dockerhub](https://github.com/SlavaZakariev/diploma/blob/d1087af6d5ada6952153e77a4cff946a805a497f/images/dip_3_1.5.jpg)
 
-9. Проверяем наличие нашего снимка в [DockerHub](https://hub.docker.com/r/slavazakariev/nginx-app/tags)
+9. Проверяем наличие нашего образа в [DockerHub](https://hub.docker.com/r/slavazakariev/nginx-app/tags)
 
 ![check-dockerhub](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_3_1.6.jpg)
 
-10. Снимок с тэгом `v1.0.0` доступен для скачивания по команде:
+10. Образ с тэгом `v1.0.0` доступен для скачивания по команде:
 
 ```bash
 docker pull slavazakariev/nginx-app:v1.0.0
@@ -359,7 +359,7 @@ docker pull slavazakariev/nginx-app:v1.0.0
 
 ![web-grafana](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_4_1.8.jpg)
 
-9. Создадим [deployment.yaml](https://github.com/SlavaZakariev/diploma/blob/main/kubernetes/nginx-app/deployment.yaml) для нашего приложения `nginx-app` на порту 30080
+9. Напишем манифест [deployment.yaml](https://github.com/SlavaZakariev/diploma/blob/main/kubernetes/nginx-app/deployment.yaml) для нашего приложения `nginx-app` на порту 30080
 
 ```yaml
 ---
@@ -564,11 +564,11 @@ jobs:                             # Задачи, которые будут вы
 
 ![pods-k8s](https://github.com/SlavaZakariev/diploma/blob/112862a4d13cb1c55d21f76a2dfd9aab798c7fc0/images/dip_5_1.7.jpg)
 
-12. Обновлённая страницы приложения [http://89.169.128.19:30080/](http://89.169.128.19:30080/)
+12. Обновлённая страница приложения `nginx-app v1.0.1` [http://89.169.128.19:30080/](http://89.169.128.19:30080/)
 
 ![myapp](https://github.com/SlavaZakariev/diploma/blob/112862a4d13cb1c55d21f76a2dfd9aab798c7fc0/images/dip_5_1.6.jpg)
 
-13. Снимок в [DockerHub](https://hub.docker.com/repository/docker/slavazakariev/nginx-app/tags)
+13. Образ доступен в [DockerHub](https://hub.docker.com/repository/docker/slavazakariev/nginx-app/tags)
 
 ```bash
 docker pull slavazakariev/nginx-app:v1.0.1
