@@ -204,7 +204,7 @@ all:
 
 ### Решение 3
 
-1. Создаём папку проекта `/opt/diploma/nginx-app`, в папке проекта создаём [Dockerfile](https://github.com/SlavaZakariev/diploma/blob/main/nginx-app/Dockerfile)
+1. Создаём папку проекта на локальном ПК `/opt/diploma/nginx-app`, в папке проекта создаём [Dockerfile](https://github.com/SlavaZakariev/diploma/blob/main/nginx-app/Dockerfile)
 
 ```dockerfile
 # Root image
@@ -275,15 +275,15 @@ http {
 
 ![build](https://github.com/SlavaZakariev/diploma/blob/d1087af6d5ada6952153e77a4cff946a805a497f/images/dip_3_1.1.jpg)
 
-5. Проверяем наличие созданного снимка
+5. Проверяем наличие созданного образа
 
 ![image](https://github.com/SlavaZakariev/diploma/blob/d1087af6d5ada6952153e77a4cff946a805a497f/images/dip_3_1.2.jpg)
 
-6. Проверяем работоспособность нашего образа, запустив контейнер
+6. Проверяем работоспособность нашего образа, запустив контейнер на локальном ПК
 
 ![run](https://github.com/SlavaZakariev/diploma/blob/d1087af6d5ada6952153e77a4cff946a805a497f/images/dip_3_1.3.jpg)
 
-7. Проверяем доступность страницы приложения
+7. Проверяем доступность страницы приложения через IP локального ПК
 
 ![web-index](https://github.com/SlavaZakariev/diploma/blob/main/images/dip_3_1.4.jpg)
 
