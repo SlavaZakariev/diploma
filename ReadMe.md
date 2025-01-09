@@ -204,7 +204,7 @@ all:
 
 ### Решение 3
 
-1. В папке проекта, создаём [Dockerfile](https://github.com/SlavaZakariev/diploma/blob/main/nginx-app/Dockerfile)
+1. Создаём папку проекта `/opt/diploma/nginx-app`, в папке проекта создаём [Dockerfile](https://github.com/SlavaZakariev/diploma/blob/main/nginx-app/Dockerfile)
 
 ```dockerfile
 # Root image
