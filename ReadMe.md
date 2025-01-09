@@ -271,7 +271,7 @@ http {
 </html>
 ```
 
-4. Запускаем создание снимка с тэгом `v1.0.0`
+4. Запускаем создание образа с тэгом `v1.0.0`
 
 ![build](https://github.com/SlavaZakariev/diploma/blob/d1087af6d5ada6952153e77a4cff946a805a497f/images/dip_3_1.1.jpg)
 
